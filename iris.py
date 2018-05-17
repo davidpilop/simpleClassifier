@@ -1,18 +1,10 @@
 import os
-import matplotlib.pyplot as plt
-import pandas as pd
 import tensorflow as tf
 from tqdm import tqdm
 
 import preprocess
 import model
-
-LOG_DIR = './log'
-NUM_EPOCHS = 201
-BATCH_SIZE = 64
-NUM_FEATURES = 4
-learning_rate = 0.01
-os.system('mkdir {}'.format(LOG_DIR))
+import constants
 
 def train():
     with tf.Graph().as_default():
