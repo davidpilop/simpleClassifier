@@ -1,4 +1,5 @@
 import os
+import argparse
 import tensorflow as tf
 from tqdm import tqdm
 
@@ -21,7 +22,7 @@ def train():
             tf.summary.scalar('accuracy', accuracy)
 
             # Get training operator
-            optimizer = tf.train.AdamOptimizer(learning_rate)
+            optimizer = tf.train.AdamOptimizer(LEARNING_RATEs)
             train_op = optimizer.minimize(loss)
 
         # Add ops to save and restore all the variables.

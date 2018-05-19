@@ -18,6 +18,13 @@ def load_data(label_name='Species'):
     train_label = my_data[:,-1]
     return train_features, train_label
 
+def num_labels():
+    file = open('meta.txt', 'r')
+    lines = file.readlines()
+    for i,line in enumerate(lines):
+        lines[i] = line.strip()
+    return lines
+
 if __name__ == "__main__":
     # Call load_data() to parse the CSV file.
     features, label = load_data()
@@ -25,3 +32,6 @@ if __name__ == "__main__":
     # View a single example entry from a batch
     print("example features:", features[0])
     print("example label:", label[0])
+
+    # meta
+    num_labels()

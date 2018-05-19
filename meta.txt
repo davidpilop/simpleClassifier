@@ -1,0 +1,3 @@
+setosa
+virginica
+versicolor
