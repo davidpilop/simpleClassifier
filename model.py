@@ -11,7 +11,7 @@ def get_model(features):
     # input_data = tf.expand_dims(features, -1)
     w1 = tf.contrib.layers.fully_connected(
             inputs=features,
-            num_outputs = 4,
+            num_outputs = 10,
             activation_fn=tf.nn.relu,
             normalizer_fn=None,
             normalizer_params=None,
@@ -26,7 +26,7 @@ def get_model(features):
             scope='hidden_1')
     w2 = tf.contrib.layers.fully_connected(
             inputs=w1,
-            num_outputs = 4,
+            num_outputs = 10,
             activation_fn=tf.nn.relu,
             normalizer_fn=None,
             normalizer_params=None,

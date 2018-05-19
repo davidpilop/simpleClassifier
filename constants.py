@@ -3,6 +3,8 @@
 """
 Constants.py
 """
+import argparse
+import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')

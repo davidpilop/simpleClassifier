@@ -1,11 +1,10 @@
 import os
-import argparse
 import tensorflow as tf
 from tqdm import tqdm
 
 import preprocess
 import model
-import constants
+from constants import *
 
 def train():
     with tf.Graph().as_default():
@@ -16,14 +15,14 @@ def train():
             loss = model.get_loss(pred, labels)
         tf.summary.scalar('loss', loss)
 
-        with tf.name_scope('metrics') as scope:
-            correct = tf.equal(tf.argmax(pred, 1), tf.to_int64(labels))
-            accuracy = tf.reduce_sum(tf.cast(correct, tf.float32)) / float(BATCH_SIZE*NUM_FEATURES)
-            tf.summary.scalar('accuracy', accuracy)
+        accuracy_mean, count = tf.metrics.accuracy(labels=tf.to_int64(labels),
+                                                   predictions=tf.argmax(pred, 1),
+                                                   name='accuracy')
+        tf.summary.scalar('accuracy', accuracy_mean)
 
-            # Get training operator
-            optimizer = tf.train.AdamOptimizer(LEARNING_RATEs)
-            train_op = optimizer.minimize(loss)
+        # Get training operator
+        optimizer = tf.train.AdamOptimizer(LEARNING_RATE)
+        train_op = optimizer.minimize(loss)
 
         # Add ops to save and restore all the variables.
         saver = tf.train.Saver()
@@ -37,7 +36,9 @@ def train():
 
         # Init variables
         init = tf.global_variables_initializer()
+        local = tf.local_variables_initializer()
         sess.run(init)
+        sess.run(local)
 
         for epoch in range(NUM_EPOCHS):
             data, label = preprocess.load_data()
@@ -51,6 +52,8 @@ def train():
                 feed_dict = {features: data[start_idx:end_idx, :],
                              labels: label[start_idx:end_idx]}
                 summary, loss_val, pred_val = sess.run([merged, loss, pred],feed_dict=feed_dict)
+                print('Labels: {}'.format(label[start_idx:end_idx]))
+                print('Predic: {}'.format(pred_val))
                 train_writer.add_summary(summary, batch_idx)
 
             save_path = saver.save(sess, os.path.join(LOG_DIR, "model.ckpt"))
