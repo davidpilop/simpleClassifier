@@ -9,6 +9,7 @@ def load_data(label_name='Species'):
     """Parses the csv file in TRAIN_URL and TEST_URL."""
 
     # Create a local copy of the training set.
+    print(TRAIN_URL.split('/')[-1])
     train_path = tf.keras.utils.get_file(fname=TRAIN_URL.split('/')[-1],
                                          origin=TRAIN_URL)
 

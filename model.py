@@ -12,7 +12,7 @@ def get_model(features):
     w1 = tf.contrib.layers.fully_connected(
             inputs=features,
             num_outputs = 10,
-            activation_fn=tf.nn.relu,
+            activation_fn=tf.nn.elu,
             normalizer_fn=None,
             normalizer_params=None,
             # weights_initializer=initializers.xavier_initializer(),
@@ -27,7 +27,7 @@ def get_model(features):
     w2 = tf.contrib.layers.fully_connected(
             inputs=w1,
             num_outputs = 10,
-            activation_fn=tf.nn.relu,
+            activation_fn=tf.nn.elu,
             normalizer_fn=None,
             normalizer_params=None,
             # weights_initializer=initializers.xavier_initializer(),
@@ -42,7 +42,7 @@ def get_model(features):
     net = tf.contrib.layers.fully_connected(
             inputs=w2,
             num_outputs = 3,
-            activation_fn=tf.nn.relu,
+            activation_fn=tf.nn.elu,
             normalizer_fn=None,
             normalizer_params=None,
             # weights_initializer=initializers.xavier_initializer(),
@@ -73,4 +73,5 @@ if __name__ == "__main__":
             for i in range(100):
                 print(i)
                 sess.run(net, feed_dict={features: np.random.rand(batch_size, num_features)})
+                print(sess.run(net, feed_dict={features: np.random.rand(batch_size, num_features)}))
             print(time.time() - start)
